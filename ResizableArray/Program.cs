@@ -12,8 +12,6 @@ namespace zad2
             {
                 Console.WriteLine("Adding element: " + i);
                 myArray.Add(i);
-                Console.WriteLine("Capacity: " + myArray.Capacity);
-                Console.WriteLine("Size: " + myArray.Size);
             }
             myArray[10] = 10;
             myArray[9] = 20;

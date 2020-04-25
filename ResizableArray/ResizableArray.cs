@@ -8,10 +8,23 @@ namespace zad2
     {
         private Type[] array;
         private int size;
+        public delegate void SizeChanged(int size);
+        public event SizeChanged sizeChangedEvent;
         public ResizableArray()
         {
             this.array = new Type[1];
             this.size = 0;
+            this.sizeChangedEvent += resizableArray_sizeChangedEvent;
+        }
+        
+        void resizableArray_sizeChangedEvent(int size)
+        {
+            Console.WriteLine("<SizeChangedEvent> Size changed. New size: {0}", size);
+        }
+        void launchSizeChangedEvent()
+        {
+            if (sizeChangedEvent != null)
+                sizeChangedEvent(this.size);
         }
         public Type this[int i]
         {
@@ -35,6 +48,7 @@ namespace zad2
                         Array.Resize(ref this.array, i + 1);
                     }
                     this.size = i + 1;
+                    launchSizeChangedEvent();
                 }
                 this.array[i] = value;
             }
@@ -48,6 +62,7 @@ namespace zad2
                 Array.Resize(ref this.array, this.array.Length * 2);
             }
             this.array[this.size++] = elem;
+            launchSizeChangedEvent();
         }
     }
 }
